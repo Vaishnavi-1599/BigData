@@ -1,0 +1,267 @@
+
+
+step1:clone repository
+step2:add file 
+step3:commit file
+step4:push file in origin or whatever else
+step5:pull if you want to add some changes in that file 
+
+
+for cloning
+	git clone SSH URL
+	
+
+
+akwaghma@inlen8520063516 MINGW64 /c/GitHubLearning
+$ cd myproject
+
+akwaghma@inlen8520063516 MINGW64 /c/GitHubLearning/myproject (main)
+$ ls -lrt
+total 1
+-rw-r--r-- 1 akwaghma 1049089 11 Sep 11 12:56 README.md
+
+akwaghma@inlen8520063516 MINGW64 /c/GitHubLearning/myproject (main)
+$ touch f1
+
+akwaghma@inlen8520063516 MINGW64 /c/GitHubLearning/myproject (main)
+$ git add f1
+
+akwaghma@inlen8520063516 MINGW64 /c/GitHubLearning/myproject (main)
+$ git commit -m "f1 file added"
+[main 03dc917] f1 file added
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 f1
+
+akwaghma@inlen8520063516 MINGW64 /c/GitHubLearning/myproject (main)
+$ git pull
+
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), 141.23 KiB | 336.00 KiB/s, done.
+From github.com:akashw088/MyProject
+   bd4d05d..9408c25  main       -> origin/main
+Merge made by the 'ort' strategy.
+ 46270891.pdf | Bin 0 -> 148807 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 46270891.pdf
+
+
+
+akwaghma@inlen8520063516 MINGW64 /c/GitHubLearning/myproject (main)
+$ git push origin
+
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (5/5), 583 bytes | 291.00 KiB/s, done.
+Total 5 (delta 0), reused 0 (delta 0), pack-reused 0
+To github.com:akashw088/MyProject.git
+   9408c25..6433f88  main -> main
+
+akwaghma@inlen8520063516 MINGW64 /c/GitHubLearning/myproject (main)
+$ git branch
+* main
+_________________________________________________________________________________________________
+
+create file using =vi file name eg vi f1
+automatic open one terminal paste it here your code and then press esc :wq!
+
+_____________________________________________________________________________________________
+
+akwaghma@inlen8520063516 MINGW64 /c/GitHubLearning/myproject (sources/dev)
+$ git checkout      //change one branch to anather branch
+
+akwaghma@inlen8520063516 MINGW64 /c/GitHubLearning/myproject (sources/dev)
+$ git checkout main
+Switched to branch 'main'
+Your branch is behind 'origin/main' by 2 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+-------------------------------------------------------------------------------------------------------------------------------
+                                                 2ND TASK
+	
+
+akwaghma@inlen8520063516 MINGW64 /c/GitHubLearning/myproject (main)
+$ cd c:
+
+akwaghma@inlen8520063516 MINGW64 /c
+$ cd:
+bash: cd:: command not found
+
+akwaghma@inlen8520063516 MINGW64 /c
+$ cd users
+
+akwaghma@inlen8520063516 MINGW64 /c/users
+$ cd akwaghma
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma
+$ cd mkdir GitHub
+bash: cd: too many arguments
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma
+$ mkdir GitHub
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma
+$ cd GitHub
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/GitHub
+$ git clone git@github.com:akashw088/MyProject.git
+Cloning into 'MyProject'...
+remote: Enumerating objects: 85, done.
+remote: Counting objects: 100% (85/85), done.
+remote: Compressing objects: 100% (62/62), done.
+Receiving objects:  68% (58/85), 164.00 KiB | 233.00 KiB/sed 0
+Receiving objects: 100% (85/85), 233.59 KiB | 343.00 KiB/s, done.
+Resolving deltas: 100% (7/7), done.
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/GitHub
+$ git clone git@github.com:akashw088/MyPractice.git
+Cloning into 'MyPractice'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (3/3), done.
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/GitHub
+$ cd .
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/GitHub
+$ cd..
+bash: cd..: command not found
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/GitHub
+$ cd /
+
+akwaghma@inlen8520063516 MINGW64 /
+$ cd c:
+
+akwaghma@inlen8520063516 MINGW64 /c
+$ cd users/akwaghma/eclipse-wokspace
+bash: cd: users/akwaghma/eclipse-wokspace: No such file or directory
+
+akwaghma@inlen8520063516 MINGW64 /c
+$ cd users/akwaghma/eclipse-workspace
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/eclipse-workspace
+$ ls -lrt
+total 24
+drwxr-xr-x 1 akwaghma 1049089 0 Sep  2  2022 Practice/
+drwxr-xr-x 1 akwaghma 1049089 0 Feb  9  2023 Acks/
+drwxr-xr-x 1 akwaghma 1049089 0 Mar  1  2023 CAPGEMINI/
+drwxr-xr-x 1 akwaghma 1049089 0 Jul 31 21:32 BankAccount/
+drwxr-xr-x 1 akwaghma 1049089 0 Aug  2 16:45 QueuePublisher/
+drwxr-xr-x 1 akwaghma 1049089 0 Aug  8 16:12 RabbitMQ_MVC/
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/eclipse-workspace
+$ git add
+fatal: not a git repository (or any of the parent directories): .git
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/eclipse-workspace
+$ git add --all
+fatal: not a git repository (or any of the parent directories): .git
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/eclipse-workspace
+$ git add .
+fatal: not a git repository (or any of the parent directories): .git
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/eclipse-workspace
+$ cd MyPractice
+bash: cd: MyPractice: No such file or directory
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/eclipse-workspace
+$ git clone /c/Users/akwaghma/eclipse-workspace/Practice
+fatal: destination path 'Practice' already exists and is not an empty directory.
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/eclipse-workspace
+$ git clone git@github.com:akashw088/secondproject.git
+Cloning into 'secondproject'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (3/3), done.
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/eclipse-workspace
+$ ls -lrt
+total 24
+drwxr-xr-x 1 akwaghma 1049089 0 Sep  2  2022 Practice/
+drwxr-xr-x 1 akwaghma 1049089 0 Feb  9  2023 Acks/
+drwxr-xr-x 1 akwaghma 1049089 0 Mar  1  2023 CAPGEMINI/
+drwxr-xr-x 1 akwaghma 1049089 0 Jul 31 21:32 BankAccount/
+drwxr-xr-x 1 akwaghma 1049089 0 Aug  2 16:45 QueuePublisher/
+drwxr-xr-x 1 akwaghma 1049089 0 Aug  8 16:12 RabbitMQ_MVC/
+drwxr-xr-x 1 akwaghma 1049089 0 Sep 11 15:37 secondproject/
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/eclipse-workspace
+$ git add .
+fatal: not a git repository (or any of the parent directories): .git
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/eclipse-workspace
+$ cd secondproject
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/eclipse-workspace/secondproject (main)
+$ ls -lrt
+total 1
+-rw-r--r-- 1 akwaghma 1049089 15 Sep 11 15:37 README.md
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/eclipse-workspace/secondproject (main)
+$ ls -lrt
+total 5
+-rw-r--r-- 1 akwaghma 1049089 15 Sep 11 15:37 README.md
+drwxr-xr-x 1 akwaghma 1049089  0 Sep 11 15:39 Practice/
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/eclipse-workspace/secondproject (main)
+$ git add --all
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/eclipse-workspace/secondproject (main)
+$ git commit -m "all files are added"
+[main f44714c] all files are added
+ 32 files changed, 374 insertions(+)
+ create mode 100644 Practice/.classpath
+ create mode 100644 Practice/.project
+ create mode 100644 Practice/.settings/.jsdtscope
+ create mode 100644 Practice/.settings/org.eclipse.core.resources.prefs
+ create mode 100644 Practice/.settings/org.eclipse.jdt.core.prefs
+ create mode 100644 Practice/.settings/org.eclipse.wst.common.component
+ create mode 100644 Practice/.settings/org.eclipse.wst.common.project.facet.core.xml
+ create mode 100644 Practice/.settings/org.eclipse.wst.jsdt.ui.superType.container
+ create mode 100644 Practice/.settings/org.eclipse.wst.jsdt.ui.superType.name
+ create mode 100644 Practice/build/classes/com/capgemini/interview/SampleDemo.class
+ create mode 100644 Practice/build/classes/com/capgemini/interview/Test.class
+ create mode 100644 Practice/build/classes/com/capgemini/interview/TestThread.class
+ create mode 100644 Practice/build/classes/com/csi/jpa/CopyArray.class
+ create mode 100644 Practice/build/classes/com/csi/jpa/FileCreation.class
+ create mode 100644 Practice/build/classes/com/csi/jpa/FileReader.class
+ create mode 100644 Practice/build/classes/com/csi/jpa/FileSearch.class
+ create mode 100644 Practice/build/classes/com/csi/jpa/FirstThreeDigit.class
+ create mode 100644 Practice/build/classes/com/csi/jpa/Patterns.class
+ create mode 100644 Practice/build/classes/com/csi/jpa/RemoveDublicates.class
+ create mode 100644 Practice/build/classes/com/csi/jpa/SampleDemo.class
+ create mode 100644 Practice/build/classes/com/csi/jpa/TestThread.class
+ create mode 100644 Practice/src/main/java/com/capgemini/interview/SampleDemo.java
+ create mode 100644 Practice/src/main/java/com/capgemini/interview/Test.java
+ create mode 100644 Practice/src/main/java/com/csi/jpa/CopyArray.java
+ create mode 100644 Practice/src/main/java/com/csi/jpa/FileCreation.java
+ create mode 100644 Practice/src/main/java/com/csi/jpa/FileReader.java
+ create mode 100644 Practice/src/main/java/com/csi/jpa/FileSearch.java
+ create mode 100644 Practice/src/main/java/com/csi/jpa/FirstThreeDigit.java
+ create mode 100644 Practice/src/main/java/com/csi/jpa/Patterns.java
+ create mode 100644 Practice/src/main/java/com/csi/jpa/RemoveDublicates.java
+ create mode 100644 Practice/src/main/java/com/csi/jpa/SampleDemo.java
+ create mode 100644 Practice/src/main/webapp/META-INF/MANIFEST.MF
+
+akwaghma@inlen8520063516 MINGW64 /c/users/akwaghma/eclipse-workspace/secondproject (main)
+$ git push origin
+Enumerating objects: 54, done.
+Counting objects: 100% (54/54), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (40/40), done.
+Writing objects: 100% (53/53), 12.43 KiB | 1.24 MiB/s, done.
+Total 53 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), done.
+To github.com:akashw088/secondproject.git
+   641cce5..f44714c  main -> main
+	
+	
