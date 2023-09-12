@@ -1,0 +1,160 @@
+ENTERPRICE DATAWAREHOUSE ANALYSIS 
+
+in rds we have subscriber related data and in that we use postgre database
+(api through that data will get inserted into the database)
+now we are using spark jdbc importing data into the hbase L1 layer.
+after importing we done the transformation in spark and put into the hive L2 layer(sub details).hive is the datawarehouse layer in hive there are the function like who
+required data they can access it.
+after that we need to generate report and data put into the s3 by using spark 
+and here we use power bi or quicksight for visualizing purpose so we able to see the data in graphically 
+here we use etl process extranct transform ald load
+
+delta data handle
+
+
+this is a batch processing not striming so suppose we set the hourly the hourly data will update
+
+*why we use s3 for storing purpose?
+=>here we are not directly put data into the hive suppose if anyone having the data then we need file format thats why we kept data in s3.
+and in aws s3 is inly onece where we can store data in file.
+
+*which type of version software you use?
+=>
+
+
+step1:create postgre type database in rds (database1-groupb)
+connect database by using workbench
+02 postgre ddl sql copy script and run it
+
+step2:insert data for subscriber
+03 initial dataload sql copy script and run it total 2338 records
+
+select count(*) from COUNTRY
+union all select count(*) from CITY
+union all select count(*) from ADDRESS
+union all select count(*) from STAFF
+union all select count(*) from PLAN_POSTPAID
+union all select count(*) from PLAN_PREPAID
+union all select count(*) from COMPLAINT
+union all select count(*) from SUBSCRIBER;
+check the data is present or not
+
+step3: import the data from database(rdbms) and load into the hbase using spark (change url in host, username and password)
+create cluster in emr usinf this tools hadoop,spark,hbase,hue,zookiper,hive,phonix
+connect cluster using putty 
+04 phonix ddl hbase table creation 
+first /usr/lib/phoenix/bin/sqlline.py localhost go to phonix terminal then copy script and create table 
+for checking tables " !tables "
+for exit phonix terminal "!q"
+
+step4: vi ref_load.py copy script 05
+vi trns_load.py copy script 06
+
+step 5:upload the jar 
+we connect the wincp using the emr and upload dep folder the all three jar will be uploaded 
+la -lrt
+op =trans load.py
+    ref load.py
+	dep
+in hadoop terminal	
+spark-submit --jars /home/hadoop/dep/postgresql-42.2.14.jar,/home/hadoop/dep/phoenix-4.14.3-HBase-1.4-client.jar,/home/hadoop/dep/phoenix-spark
+-4.14.3-HBase-1.4.jar --master yarn --deploy-mode client --driver-memory 3g --executor-memory 2g --num-executors 1 --executor-cores 1 /home/hadoop/
+ref_load.py
+
+spark-submit --jars /home/hadoop/dep/postgresql-42.2.14.jar,/home/hadoop/dep/phoenix-4.14.3-HBase-1.4-client.jar,/home/hadoop/dep/phoenix-spark-
+4.14.3-HBase-1.4.jar --master yarn --deploy-mode client --driver-memory 3g --executor-memory 2g --num-executors 1 --executor-cores 1 /home/hadoop
+/trans_load.py
+	
+switch to the phonix terminal
+!tables and all refreenec table will be uploaded or not
+select * from subscriber;	
+	
+	
+step6:extract this data perform transformation and load into the hive 	
+vi l2_ddl.hql copy scrpit 07 hive ddl
+run hql script=> hive -f l2_ddl.hql
+ls -lrt
+	
+spark-submit --jars /home/hadoop/dep/phoenix-4.14.3-HBase-1.4-client.jar,/home/hadoop/dep/phoenix-spark-4.14.3-HBase-1.4.jar --master yarn 
+--deploy-mode client --driver-memory 3g --executor-memory 2g --num-executors 1 --executor-cores 1 /home/hadoop/sub_details.py
+
+spark-submit --jars /home/hadoop/dep/phoenix-4.14.3-HBase-1.4-client.jar,/home/hadoop/dep/phoenix-spark-4.14.3-HBase-1.4.jar --master yarn
+--deploy-mode client --driver-memory 3g --executor-memory 2g --num-executors 1 --executor-cores 1 /home/hadoop/cmp_details.py
+ 
+use prod 
+show tables;
+select * from subscriber_details_staging ;
+select * from complaint_details_staging ;
+
+
+
+*how can we remove the dupliactes
+=>transformed data we need to keep in staging layer. first we perform union all opertion in staging table and final table so data will get merge .
+after union all we will replace the (update)null date with any old date here we will replace with(1-1-1970) then we are applying row number desc update date 
+and partitioned by subid so it will assign the number sequentially .then we are assign row num = 1 and filter the records when row num = 1 and it will
+put into the hive final table so all latest records will be here. and here staging table will be clear for the agian next days of the records .
+
+
+step7:scropt 10 dedup compaction 
+vi dedup.py 
+paste script 10 data in that 	
+
+Hive_stg   hive_final
+/usr/bin/spark-submit --master yarn --deploy-mode client --driver-memory 3g --executor-memory 2g --num-executors 1 --executor-cores 1  /home/hadoop/dedup.py
+
+use prod;
+show tables;
+select * from subscriber_details_staging ;// staging table will be clean
+select * from complaint_details_staging ; // staging table will be clean
+
+select * from subscriber_details ;// here showing the records 
+select * from complaint_details;// here showing the records 
+
+step8:create b9class123 bucket in s3 cretae folder EDWA Report all revenue report should get generated here 
+ 
+changes in 12 no script 
+revenue_report.coalesce(1).write.mode("append").format("CSV").option("header","true").option("delimiter","|").save("s3://b9class123/EDWA_Report/revenue_report_
+(copy s3 folder loc and put here)"+currentdate)
+
+
+vi report.py
+paste 12 hive final to s3 extraction number script 
+
+/usr/bin/spark-submit --master yarn --deploy-mode client --driver-memory 3g --executor-memory 2g --num-executors 1 --executor-cores 1  /home/hadoop/report.py
+
+in result in s3 revenue report is generated with todays date 
+
+create 2 nd folder input data folder and upload data folder here and this path update in 11 script
+
+vi delta.py and paste 11 number script here
+
+
+/usr/bin/spark-submit --jars /home/hadoop/dep/phoenix-4.14.3-HBase-1.4-client.jar,/home/hadoop/dep/phoenix-spark-4.14.3-HBase-1.4.jar --master yarn --deploy-mode 
+client --driver-memory 3g --executor-memory 2g --num-executors 1 --executor-cores 1  /home/hadoop/delta.py
+
+hive 
+use prod 
+show tables
+select * from subscriber_details_staging // here we will get only 5 record 
+
+/usr/bin/spark-submit --master yarn --deploy-mode client --driver-memory 3g --executor-memory 2g --num-executors 1 --executor-cores 1  /home/hadoop/dedup.py// it will 
+keep only the latest record and all record push into the final
+
+
+hive 
+use prod 
+show tables
+select * from subscriber_details_staging // here we will get only clean record 
+select * from subscriber_details// here we will get 1003 record 
+
+in hadoop terminal 
+vi report.py
+revenue_report.coalesce(1).write.mode("append").format("CSV").option("header","true").option("delimiter","|").save("s3://b9class123/EDWA_Report/revenue_report_new_"+currentdate)
+
+to create new report for todays date 
+
+run job by using this command
+/usr/bin/spark-submit --master yarn --deploy-mode client --driver-memory 3g --executor-memory 2g --num-executors 1 --executor-cores 1  /home/hadoop/report.py
+
+
+here we use the online comparisor tool for previous revenue report and todays revenue report
